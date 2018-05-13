@@ -1,0 +1,2 @@
+install: gradle wrapper --gradle-version 4.7
+language: java
