@@ -6,11 +6,20 @@
  * user guide available at https://docs.gradle.org/4.7/userguide/java_library_plugin.html
  */
 
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'com.netflix.nebula:gradle-lint-plugin:9.3.1'
+    }
+}
+
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
     id 'maven'
 }
+
+apply plugin: 'nebula.lint'
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
@@ -21,6 +30,11 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+}
+
+gradleLint {
+    rules  = ['all-dependencies', 'unused-dependency']
+//    criticalRules = ['unused-dependency'] // <-- this will fail the build in the event of a violation
 }
 
 version = '0.1.0'
